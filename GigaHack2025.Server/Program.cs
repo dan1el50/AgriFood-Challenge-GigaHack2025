@@ -35,16 +35,22 @@ builder.Services.AddValidatorsFromAssembly(typeof(RegisterUserCommand).Assembly)
 // Add Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-// Add CORS for development
+// Replace your current CORS configuration with this:
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowBlazorClient", policy =>
     {
-        policy.WithOrigins("https://localhost:5001", "http://localhost:5000")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins(
+            "http://localhost:5240",    // Your actual client port
+            "https://localhost:7001",   // HTTPS version if needed
+            "http://localhost:5000",    // Keep the old ones for compatibility
+            "https://localhost:5001"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
+
 
 var app = builder.Build();
 
