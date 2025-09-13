@@ -1,0 +1,6 @@
+@GigaHack2025.Server_HostAddress = http://localhost:5265
+
+GET {{GigaHack2025.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
