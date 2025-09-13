@@ -118,3 +118,128 @@
         font-size: 1.5rem;
     }
 }
+/* Dashboard Welcome Section */
+.welcome-section {
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+}
+
+.welcome-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.welcome-section h1 {
+    color: #2F4F2F;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Profile Completion Progress Bar */
+.profile-completion-bar {
+    display: flex;
+    align-items: center;
+    min-width: 300px;
+}
+
+.completion-progress {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+}
+
+.progress-container {
+    width: 150px;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.completion-text {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.percentage {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6c757d;
+    white-space: nowrap;
+}
+
+.btn-complete {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-complete:hover {
+    background: #218838;
+    transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .welcome-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-completion-bar {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .completion-progress {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+
+    .completion-text {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    .progress-container {
+        width: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .welcome-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .progress-container {
+        width: 150px;
+    }
+}
+
