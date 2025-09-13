@@ -1,0 +1,149 @@
+﻿.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.login-card {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Logo Section - UPDATED */
+.logo-section {
+    margin-bottom: 32px;
+}
+
+.logo-image {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 16px;
+    object-fit: contain; /* Maintains aspect ratio */
+}
+
+.brand-name {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2d5016;
+    margin: 0;
+}
+
+/* Form Section (rest remains the same) */
+.form-section {
+    text-align: left;
+}
+
+.login-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 8px 0;
+    text-align: center;
+}
+
+.login-subtitle {
+    font-size: 16px;
+    color: #666;
+    margin: 0 0 32px 0;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+.form-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #e8e8e8;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    transition: background-color 0.2s ease;
+}
+
+    .form-input:focus {
+        background-color: #ddd;
+    }
+
+    .form-input::placeholder {
+        color: #999;
+    }
+
+.forgot-password {
+    text-align: right;
+    margin-bottom: 24px;
+}
+
+    .forgot-password a {
+        font-size: 14px;
+        color: #666;
+        text-decoration: underline;
+    }
+
+        .forgot-password a:hover {
+            color: #333;
+        }
+
+.login-button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #a0a0a0;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: not-allowed;
+    transition: background-color 0.2s ease;
+    margin-bottom: 24px;
+}
+
+    .login-button:not(:disabled) {
+        background-color: #5a6c57;
+        cursor: pointer;
+    }
+
+        .login-button:not(:disabled):hover {
+            background-color: #4a5c47;
+        }
+
+.signup-link {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+    .signup-link a {
+        color: #5a6c57;
+        text-decoration: underline;
+    }
+
+        .signup-link a:hover {
+            color: #4a5c47;
+        }
+
+/* Validation Messages */
+.validation-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px;
+}
