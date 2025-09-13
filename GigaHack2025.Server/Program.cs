@@ -4,13 +4,23 @@ using GigaHack2025.Core.Interfaces;
 using GigaHack2025.Infrastructure.Repositories;
 using GigaHack2025.UseCases.Commands.Users;
 using FluentValidation;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+
+// Replace OpenAPI with Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "GigaHack2025 API",
+        Version = "v1",
+        Description = "AgroHub API for user registration and authentication"
+    });
+});
 
 // Add Entity Framework
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -41,7 +51,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    // Enable Swagger in development
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "GigaHack2025 API v1");
+        c.RoutePrefix = "swagger"; // This makes it accessible at /swagger
+    });
 }
 
 app.UseHttpsRedirection();
@@ -49,6 +65,7 @@ app.UseCors("AllowBlazorClient");
 app.UseAuthorization();
 app.MapControllers();
 
+// Keep your weather forecast endpoint for testing
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
