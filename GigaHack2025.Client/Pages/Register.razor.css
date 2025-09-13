@@ -1,4 +1,4 @@
-﻿.login-container {
+﻿.register-container {
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -7,12 +7,12 @@
     padding: 20px;
 }
 
-.login-card {
+.register-card {
     background: white;
     border-radius: 16px;
     padding: 40px;
     width: 100%;
-    max-width: 400px;
+    max-width: 440px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
@@ -41,7 +41,7 @@
     text-align: left;
 }
 
-.login-title {
+.register-title {
     font-size: 28px;
     font-weight: 600;
     color: #333;
@@ -49,7 +49,7 @@
     text-align: center;
 }
 
-.login-subtitle {
+.register-subtitle {
     font-size: 16px;
     color: #666;
     margin: 0 0 32px 0;
@@ -78,6 +78,7 @@
     color: #333;
     outline: none;
     transition: background-color 0.2s ease;
+    box-sizing: border-box;
 }
 
     .form-input:focus {
@@ -88,22 +89,42 @@
         color: #999;
     }
 
-.forgot-password {
-    text-align: right;
-    margin-bottom: 24px;
+/* Checkbox Groups */
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
 }
 
-    .forgot-password a {
-        font-size: 14px;
-        color: #666;
-        text-decoration: underline;
+.checkbox-input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.checkbox-label {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
+    cursor: pointer;
+    margin: 0;
+}
+
+.terms-link {
+    color: #5a6c57;
+    text-decoration: underline;
+}
+
+    .terms-link:hover {
+        color: #4a5c47;
     }
 
-        .forgot-password a:hover {
-            color: #333;
-        }
-
-.login-button {
+/* Register Button */
+.register-button {
     width: 100%;
     padding: 16px;
     border: none;
@@ -114,34 +135,26 @@
     font-weight: 600;
     cursor: not-allowed;
     transition: background-color 0.2s ease;
-    margin-bottom: 24px;
+    margin-top: 24px;
 }
 
-    .login-button:not(:disabled) {
+    .register-button:not(:disabled) {
         background-color: #5a6c57;
         cursor: pointer;
     }
 
-        .login-button:not(:disabled):hover {
+        .register-button:not(:disabled):hover {
             background-color: #4a5c47;
         }
 
-.signup-link {
-    text-align: center;
-    font-size: 14px;
-    color: #666;
+/* Validation Messages */
+.validation-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
 }
 
-    .signup-link a {
-        color: #5a6c57;
-        text-decoration: underline;
-    }
-
-        .signup-link a:hover {
-            color: #4a5c47;
-        }
-
-/* Error Message */
 .error-message {
     background-color: #ffeaea;
     border: 1px solid #f5c6cb;
@@ -152,9 +165,23 @@
     font-size: 14px;
 }
 
-/* Validation Messages */
-.validation-message {
-    color: #dc3545;
-    font-size: 12px;
-    margin-top: 4px;
+/* Responsive Design */
+@media (max-width: 480px) {
+    .register-card {
+        padding: 24px;
+        margin: 10px;
+    }
+
+    .logo-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .brand-name {
+        font-size: 24px;
+    }
+
+    .register-title {
+        font-size: 24px;
+    }
 }
