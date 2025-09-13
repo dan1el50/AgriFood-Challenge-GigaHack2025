@@ -1,0 +1,105 @@
+/* ONLY STYLES FOR AGRICULTURAL SERVICE BOXES - NO INTERFERENCE WITH EXISTING STYLES */
+
+.agricultural-services-section {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+}
+
+.agricultural-services-section h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.agri-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.agri-service-box {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+}
+
+.agri-service-box:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    border-color: #4CAF50;
+}
+
+.agri-box-header {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.agri-box-icon {
+    font-size: 2.5rem;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.agri-box-content {
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.agri-box-content h3 {
+    margin: 0 0 0.75rem 0;
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.agri-box-content p {
+    margin: 0;
+    color: #666;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    flex-grow: 1;
+}
+
+/* Responsive adjustments for boxes only */
+@media (max-width: 768px) {
+    .agri-services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .agri-service-box {
+        min-height: 240px;
+    }
+
+    .agri-box-header {
+        height: 80px;
+    }
+
+    .agri-box-icon {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .agri-services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .agricultural-services-section {
+        margin-top: 2rem;
+    }
+}

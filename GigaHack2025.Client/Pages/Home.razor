@@ -1,7 +1,86 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1></h1>
 
 Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+<!-- ADD THE SERVICE BOXES BELOW THE EXISTING CONTENT -->
+<div class="agricultural-services-section">
+    <h2>Agricultural Services</h2>
+    <div class="agri-services-grid">
+        <div class="agri-service-box" @onclick="NavigateToSubsidies">
+            <div class="agri-box-header">
+                <div class="agri-box-icon">🏛️</div>
+            </div>
+            <div class="agri-box-content">
+                <h3>Subsidies & Grants</h3>
+                <p>Access government subsidies and grant programs for agricultural development</p>
+            </div>
+        </div>
+
+        <div class="agri-service-box" @onclick="NavigateToFinancing">
+            <div class="agri-box-header">
+                <div class="agri-box-icon">🏦</div>
+            </div>
+            <div class="agri-box-content">
+                <h3>Loans & Insurance</h3>
+                <p>Find agricultural loans and insurance options to protect your investments</p>
+            </div>
+        </div>
+
+        <div class="agri-service-box" @onclick="NavigateToCertification">
+            <div class="agri-box-header">
+                <div class="agri-box-icon">🏅</div>
+            </div>
+            <div class="agri-box-content">
+                <h3>Certification Services</h3>
+                <p>Get organic, quality, and compliance certifications for your products</p>
+            </div>
+        </div>
+
+        <div class="agri-service-box" @onclick="NavigateToMarket">
+            <div class="agri-box-header">
+                <div class="agri-box-icon">📊</div>
+            </div>
+            <div class="agri-box-content">
+                <h3>Market Intelligence</h3>
+                <p>Discover market trends, demands, and optimal selling opportunities</p>
+            </div>
+        </div>
+
+        <div class="agri-service-box" @onclick="NavigateToOpportunities">
+            <div class="agri-box-header">
+                <div class="agri-box-icon">⭐</div>
+            </div>
+            <div class="agri-box-content">
+                <h3>Premium Opportunities</h3>
+                <p>Exclusive deals, partnerships, and high-value contract opportunities</p>
+            </div>
+        </div>
+
+        <div class="agri-service-box" @onclick="NavigateToCommunity">
+            <div class="agri-box-header">
+                <div class="agri-box-icon">🤝</div>
+            </div>
+            <div class="agri-box-content">
+                <h3>Community Support</h3>
+                <p>Connect with farmers for knowledge sharing and mutual assistance</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@inject NavigationManager Navigation
+
+@code {
+    private void NavigateToSubsidies() => Navigation.NavigateTo("/subsidies");
+    private void NavigateToFinancing() => Navigation.NavigateTo("/financing");
+    private void NavigateToCertification() => Navigation.NavigateTo("/certification");
+    private void NavigateToMarket() => Navigation.NavigateTo("/market");
+    private void NavigateToOpportunities() => Navigation.NavigateTo("/opportunities");
+    private void NavigateToCommunity() => Navigation.NavigateTo("/community");
+}
