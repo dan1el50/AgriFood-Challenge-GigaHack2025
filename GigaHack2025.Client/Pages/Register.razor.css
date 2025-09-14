@@ -19,8 +19,9 @@
 
 /* Logo Section */
 .logo-section {
-    margin-bottom: 32px;
+    margin-bottom: 40px; /* Increased from 32px */
 }
+
 
 .logo-image {
     width: 80px;

@@ -10,35 +10,29 @@
 .login-card {
     background: white;
     border-radius: 16px;
-    padding: 40px;
+    padding: 40px 24px; /* Reduced padding for wider inputs */
     width: 100%;
     max-width: 400px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
+    box-sizing: border-box;
 }
 
-/* Logo Section */
+/* Logo Section - Updated spacing */
 .logo-section {
-    margin-bottom: 32px;
+    margin-bottom: 40px; /* Increased from 32px since we removed text */
 }
 
 .logo-image {
     width: 80px;
     height: 80px;
-    margin-bottom: 16px;
     object-fit: contain;
-}
-
-.brand-name {
-    font-size: 32px;
-    font-weight: 600;
-    color: #2d5016;
-    margin: 0;
 }
 
 /* Form Section */
 .form-section {
     text-align: left;
+    width: 100%; /* Ensure full width usage */
 }
 
 .login-title {
@@ -56,8 +50,11 @@
     text-align: center;
 }
 
+/* Force form groups to use full width */
 .form-group {
+    width: 100% !important;
     margin-bottom: 20px;
+    display: block;
 }
 
     .form-group label {
@@ -68,8 +65,11 @@
         margin-bottom: 8px;
     }
 
+/* Force input fields to stretch full width */
 .form-input {
-    width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
     padding: 14px 16px;
     border: none;
     border-radius: 8px;
@@ -78,19 +78,32 @@
     color: #333;
     outline: none;
     transition: background-color 0.2s ease;
+    box-sizing: border-box !important;
+    display: block;
+    margin: 0;
 }
 
-    .form-input:focus {
-        background-color: #ddd;
-    }
+/* Also target the actual HTML input elements directly */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
 
-    .form-input::placeholder {
-        color: #999;
-    }
+.form-input:focus {
+    background-color: #ddd;
+}
+
+.form-input::placeholder {
+    color: #999;
+}
 
 .forgot-password {
     text-align: right;
     margin-bottom: 24px;
+    width: 100%; /* Ensure full width */
 }
 
     .forgot-password a {
@@ -104,7 +117,7 @@
         }
 
 .login-button {
-    width: 100%;
+    width: 100% !important; /* Full width button */
     padding: 16px;
     border: none;
     border-radius: 8px;
@@ -115,6 +128,7 @@
     cursor: not-allowed;
     transition: background-color 0.2s ease;
     margin-bottom: 24px;
+    box-sizing: border-box; /* Include padding in width */
 }
 
     .login-button:not(:disabled) {
@@ -130,6 +144,7 @@
     text-align: center;
     font-size: 14px;
     color: #666;
+    width: 100%; /* Ensure full width */
 }
 
     .signup-link a {
@@ -150,6 +165,8 @@
     border-radius: 8px;
     margin-bottom: 16px;
     font-size: 14px;
+    width: 100% !important; /* Full width */
+    box-sizing: border-box; /* Include padding and border in width */
 }
 
 /* Validation Messages */
@@ -157,4 +174,21 @@
     color: #dc3545;
     font-size: 12px;
     margin-top: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 24px 16px; /* Reduced padding for mobile */
+        margin: 10px;
+    }
+
+    .logo-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .login-title {
+        font-size: 24px;
+    }
 }
