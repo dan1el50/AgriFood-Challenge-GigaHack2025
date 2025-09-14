@@ -1,0 +1,68 @@
+﻿@page "/"
+
+<div class="landing-container">
+    <div class="hero-section">
+        <img src="images/generated-image-removebg-preview.png" alt="AgroHub" class="hero-logo" />
+        <h1>Welcome to AgroHub</h1>
+        <p>Your comprehensive agricultural platform</p>
+        <div class="cta-buttons">
+            <button class="btn btn-primary" @onclick="GoToLogin">Get Started</button>
+        </div>
+    </div>
+</div>
+
+@inject NavigationManager Navigation
+
+@code {
+    private void GoToLogin() => Navigation.NavigateTo("/login");
+}
+
+<style>
+    .landing-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        text-align: center;
+    }
+
+    .hero-section {
+        max-width: 500px;
+        padding: 2rem;
+    }
+
+    .hero-logo {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 2rem;
+    }
+
+    .hero-section h1 {
+        color: #2F4F2F;
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .hero-section p {
+        color: #6c757d;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    .btn-primary {
+        background: #4a5c47;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background: #3d4a38;
+            transform: translateY(-2px);
+        }
+</style>

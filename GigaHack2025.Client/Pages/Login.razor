@@ -1,5 +1,4 @@
-﻿@page "/"
-@page "/login"
+﻿@page "/login"
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Components.Forms
 @inject HttpClient Http
@@ -115,27 +114,22 @@
     {
         isLoading = true;
         errorMessage = null;
-
         try
         {
-            // Create the login request
             var loginRequest = new
             {
                 email = loginModel.Email,
                 password = loginModel.Password
             };
 
-            // Call your login API
             var response = await Http.PostAsJsonAsync("api/Auth/login", loginRequest);
 
             if (response.IsSuccessStatusCode)
             {
-                // Login successful
                 var userResponse = await response.Content.ReadFromJsonAsync<UserResponseDto>();
 
-                // TODO: Store user data in session/local storage for authentication state
-                // For now, just navigate to a dashboard or home page
-                Navigation.NavigateTo("/");
+                // Redirect to dashboard after successful login
+                Navigation.NavigateTo("/dashboard");
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {

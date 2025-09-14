@@ -4,15 +4,13 @@ using GigaHack2025.Infrastructure.Data;
 using GigaHack2025.Infrastructure.Repositories;
 using GigaHack2025.UseCases.Commands.FarmerProfiles;
 using GigaHack2025.UseCases.Commands.Users;
+using GigaHack2025.UseCases.Validators;
 using Microsoft.EntityFrameworkCore;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-
-// Replace OpenAPI with Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -31,24 +29,26 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RegisterUserCommand).Assembly));
 
-// New registration (scans UseCases assembly where handlers are)
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(
-    typeof(CreateFarmerProfileCommand).Assembly
-));
+// Add FluentValidation - This fixes the validator registration error
+builder.Services.AddValidatorsFromAssemblyContaining<RegisterUserCommandValidator>();
 
-
-// Add Repositories
+// Add repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IFarmerProfileRepository, FarmerProfileRepository>();
 
-// Replace your current CORS configuration with this:
+// Add CORS - Updated for your actual ports and Swagger UI
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowBlazorClient", policy =>
     {
         policy.WithOrigins(
-            "http://localhost:5240",    // Your actual client port
-            "https://localhost:7001",   // HTTPS version if needed
-            "http://localhost:5000",    // Keep the old ones for compatibility
+            "https://localhost:64755", // Your Blazor client HTTPS
+            "http://localhost:64757",  // Your Blazor client HTTP
+            "https://localhost:64756", // Allow Swagger UI (same as server)
+            "http://localhost:64758",  // Allow Swagger UI HTTP
+            "http://localhost:5240",   // Keep old ones for compatibility
+            "https://localhost:7001",
+            "http://localhost:5000",
             "https://localhost:5001"
         )
         .AllowAnyHeader()
@@ -56,23 +56,16 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Add this to your existing services
-builder.Services.AddScoped<IFarmerProfileRepository, FarmerProfileRepository>();
-
-// Validators are already registered via assembly scanning
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    // Enable Swagger in development
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "GigaHack2025 API v1");
-        c.RoutePrefix = "swagger"; // This makes it accessible at /swagger
+        c.RoutePrefix = "swagger";
     });
 }
 
@@ -81,7 +74,7 @@ app.UseCors("AllowBlazorClient");
 app.UseAuthorization();
 app.MapControllers();
 
-// Keep your weather forecast endpoint for testing
+// Weather forecast endpoint for testing
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -90,8 +83,7 @@ var summaries = new[]
 app.MapGet("/weatherforecast", () =>
 {
     var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
+        new WeatherForecast(
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
             Random.Shared.Next(-20, 55),
             summaries[Random.Shared.Next(summaries.Length)]

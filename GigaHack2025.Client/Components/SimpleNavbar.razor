@@ -1,0 +1,21 @@
+﻿@inject NavigationManager Navigation
+
+<nav class="simple-navbar">
+    <div class="navbar-brand">
+        <img src="images/generated-image-removebg-preview.png" alt="AgroHub" class="brand-logo" />
+        <span class="brand-text">AgroHub</span>
+    </div>
+    <div class="auth-buttons">
+        <button class="nav-btn login-btn" @onclick="GoToLogin">
+            Log in
+        </button>
+        <button class="nav-btn register-btn" @onclick="GoToRegister">
+            Sign up
+        </button>
+    </div>
+</nav>
+
+@code {
+    private void GoToLogin() => Navigation.NavigateTo("/login");
+    private void GoToRegister() => Navigation.NavigateTo("/register");
+}
