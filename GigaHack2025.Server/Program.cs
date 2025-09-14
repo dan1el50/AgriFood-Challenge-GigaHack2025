@@ -1,9 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using GigaHack2025.Infrastructure.Data;
-using GigaHack2025.Core.Interfaces;
-using GigaHack2025.Infrastructure.Repositories;
-using GigaHack2025.UseCases.Commands.Users;
 using FluentValidation;
+using GigaHack2025.Core.Interfaces;
+using GigaHack2025.Infrastructure.Data;
+using GigaHack2025.Infrastructure.Repositories;
+using GigaHack2025.UseCases.Commands.FarmerProfiles;
+using GigaHack2025.UseCases.Commands.Users;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,8 +31,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RegisterUserCommand).Assembly));
 
-// Add FluentValidation
-builder.Services.AddValidatorsFromAssembly(typeof(RegisterUserCommand).Assembly);
+// New registration (scans UseCases assembly where handlers are)
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(
+    typeof(CreateFarmerProfileCommand).Assembly
+));
+
 
 // Add Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -50,6 +55,11 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod();
     });
 });
+
+// Add this to your existing services
+builder.Services.AddScoped<IFarmerProfileRepository, FarmerProfileRepository>();
+
+// Validators are already registered via assembly scanning
 
 
 var app = builder.Build();
