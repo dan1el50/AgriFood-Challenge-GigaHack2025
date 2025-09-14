@@ -1,0 +1,405 @@
+@page "/profile"
+@page "/profile-setup"
+
+<PageTitle>My Profile - John Smith</PageTitle>
+
+<div class="profile-container">
+    <!-- Header Section -->
+    <div class="profile-header">
+        <div class="profile-info-section">
+            <div class="profile-avatar">
+                <img src="images/farmer-profile.jpg" alt="Daniel Cojocar" />
+            </div>
+            <div class="profile-basic-info">
+                <h2>John Smit</h2>
+                <p>WheatMD@gmail.com</p>
+            </div>
+        </div>
+        <button class="btn-edit" @onclick="ToggleEditMode">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+            </svg>
+            Edit
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="profile-content">
+        <div class="form-section">
+            <h3>My details</h3>
+            <p class="section-subtitle">Update your photo and personal details here.</p>
+
+            <!-- Section 1: Farmer/Business Profile -->
+            <div class="form-group-section">
+                <h4>Business Profile</h4>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fullName">Full Name / Business Name</label>
+                        <input type="text" id="fullName" class="form-input" @bind="FullName" placeholder="Enter full name or business name" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="companyName">Company Name</label>
+                        <input type="text" id="companyName" class="form-input" @bind="CompanyName" placeholder="Enter company name" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="legalForm">Legal Form of the Farm</label>
+                        <select id="legalForm" class="form-input" @bind="LegalForm">
+                            <option value="">Select legal form</option>
+                            <option value="household">Household Farm</option>
+                            <option value="llc">LLC</option>
+                            <option value="joint-stock">Joint-Stock</option>
+                            <option value="cooperative">Cooperative</option>
+                            <option value="individual">Individual Enterprise</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="companyIdno">Company IDNO</label>
+                        <input type="text" id="companyIdno" class="form-input" @bind="CompanyIdno" placeholder="Enter company IDNO" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="registrationDate">Official Registration Date</label>
+                        <input type="date" id="registrationDate" class="form-input" @bind="RegistrationDate" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-input" @bind="Email" placeholder="Enter email address" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" class="form-input" @bind="Phone" placeholder="Enter phone number" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="address">Postal Address</label>
+                        <input type="text" id="address" class="form-input" @bind="Address" placeholder="Enter postal address" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Farm Representative -->
+            <div class="form-group-section">
+                <h4>Farm Representative / Administrator</h4>
+                
+                <div class="form-row-dual">
+                    <div class="form-group">
+                        <label for="repFirstName">First Name</label>
+                        <input type="text" id="repFirstName" class="form-input" @bind="RepFirstName" placeholder="Enter first name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="repLastName">Last Name</label>
+                        <input type="text" id="repLastName" class="form-input" @bind="RepLastName" placeholder="Enter last name" />
+                    </div>
+                </div>
+
+                <div class="form-row-dual">
+                    <div class="form-group">
+                        <label for="repDateOfBirth">Date of Birth</label>
+                        <input type="date" id="repDateOfBirth" class="form-input" @bind="RepDateOfBirth" />
+                    </div>
+                    <div class="form-group">
+                        <label for="repGender">Gender</label>
+                        <select id="repGender" class="form-input" @bind="RepGender">
+                            <option value="">Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="repIdNumber">ID Number</label>
+                        <input type="text" id="repIdNumber" class="form-input" @bind="RepIdNumber" placeholder="Enter ID number" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Activities & Resources -->
+            <div class="form-group-section">
+                <h4>Activities & Resources</h4>
+                
+                <div class="form-group">
+                    <label>Agricultural Activities (multi-select)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" @bind="CropCultivation" />
+                            <span>Crop cultivation (annual/permanent)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" @bind="AnimalHusbandry" />
+                            <span>Animal husbandry</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" @bind="MixedFarming" />
+                            <span>Mixed farming</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" @bind="ProcessingActivities" />
+                            <span>Processing/post-harvest activities</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="totalFarmland">Total Farmland Area (ha)</label>
+                        <input type="number" id="totalFarmland" class="form-input" @bind="TotalFarmland" placeholder="Enter total farmland area" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Land Use Types</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" @bind="Arable" />
+                            <span>Arable</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" @bind="Orchards" />
+                            <span>Orchards</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" @bind="Vineyards" />
+                            <span>Vineyards</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" @bind="Pastures" />
+                            <span>Pastures</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" @bind="Hayfields" />
+                            <span>Hayfields</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" @bind="Greenhouses" />
+                            <span>Greenhouses</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Livestock Register -->
+            <div class="form-group-section">
+                <h4>Livestock Register</h4>
+                
+                <div class="form-row-dual">
+                    <div class="form-group">
+                        <label for="cattle">Cattle</label>
+                        <input type="number" id="cattle" class="form-input" @bind="Cattle" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="pigs">Pigs</label>
+                        <input type="number" id="pigs" class="form-input" @bind="Pigs" placeholder="0" />
+                    </div>
+                </div>
+
+                <div class="form-row-dual">
+                    <div class="form-group">
+                        <label for="sheep">Sheep</label>
+                        <input type="number" id="sheep" class="form-input" @bind="Sheep" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="goats">Goats</label>
+                        <input type="number" id="goats" class="form-input" @bind="Goats" placeholder="0" />
+                    </div>
+                </div>
+
+                <div class="form-row-dual">
+                    <div class="form-group">
+                        <label for="horses">Horses</label>
+                        <input type="number" id="horses" class="form-input" @bind="Horses" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="poultry">Poultry</label>
+                        <input type="number" id="poultry" class="form-input" @bind="Poultry" placeholder="0" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Human Resources -->
+            <div class="form-group-section">
+                <h4>Human Resources</h4>
+                
+                <div class="form-row-triple">
+                    <div class="form-group">
+                        <label for="totalEmployees">Total Employees</label>
+                        <input type="number" id="totalEmployees" class="form-input" @bind="TotalEmployees" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="familyMembers">Family Members</label>
+                        <input type="number" id="familyMembers" class="form-input" @bind="FamilyMembers" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="seasonalWorkers">Seasonal Workers</label>
+                        <input type="number" id="seasonalWorkers" class="form-input" @bind="SeasonalWorkers" placeholder="0" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Financial Information -->
+            <div class="form-group-section">
+                <h4>Financial Information (Optional)</h4>
+                
+                <div class="form-row-dual">
+                    <div class="form-group">
+                        <label for="annualIncome">Annual Income (MDL)</label>
+                        <input type="number" id="annualIncome" class="form-input" @bind="AnnualIncome" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="annualExpenses">Annual Expenses (MDL)</label>
+                        <input type="number" id="annualExpenses" class="form-input" @bind="AnnualExpenses" placeholder="0" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="subsidiesReceived">Subsidies/Aid Received</label>
+                        <input type="text" id="subsidiesReceived" class="form-input" @bind="SubsidiesReceived" placeholder="Describe subsidies received" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7: Notes -->
+            <div class="form-group-section">
+                <h4>Notes & Special Mentions</h4>
+                
+                <div class="form-group">
+                    <label for="notes">Notes/Needs/Comments</label>
+                    <textarea id="notes" class="form-textarea" @bind="Notes" placeholder="Enter any specific needs, interests, challenges, etc."></textarea>
+                </div>
+            </div>
+
+            <!-- Section 8: Consent -->
+            <div class="form-group-section">
+                <h4>Consent & Transparency Statement</h4>
+                
+                <div class="consent-section">
+                    <label class="checkbox-label consent-label">
+                        <input type="checkbox" @bind="ConsentDataSharing" />
+                        <span>I agree to provide data for improving agricultural services, access to subsidies and loans, statistical databases. I confirm I am the owner of the data, which will be managed transparently and shared only legally/after anonymization.</span>
+                    </label>
+                    
+                    <label class="checkbox-label consent-label">
+                        <input type="checkbox" @bind="AcceptPrivacyPolicy" />
+                        <span>I accept privacy and data-sharing policies</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="form-actions">
+                <button class="btn-cancel" @onclick="Cancel">Cancel</button>
+                <button class="btn-save" @onclick="SaveProfile">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="completion-badge" style="display: @(CompletionPercentage >= 80 ? "block" : "none")">
+        <span class="badge-icon">✔️</span>
+        <span>Verified Farmer!</span>
+    </div>
+</div>
+
+@inject NavigationManager Navigation
+
+@code {
+    // Business Profile
+    private string FullName = "Daniel Cojocar";
+    private string CompanyName = "WheatMD SRL";
+    private string LegalForm = "llc";
+    private string CompanyIdno = "";
+    private DateTime? RegistrationDate;
+    private string Email = "WheatMD@gmail.com";
+    private string Phone = "";
+    private string Address = "";
+
+    // Farm Representative
+    private string RepFirstName = "Daniel";
+    private string RepLastName = "Cojocar";
+    private DateTime? RepDateOfBirth;
+    private string RepGender = "";
+    private string RepIdNumber = "";
+
+    // Activities & Resources
+    private bool CropCultivation = false;
+    private bool AnimalHusbandry = false;
+    private bool MixedFarming = false;
+    private bool ProcessingActivities = false;
+    private decimal? TotalFarmland;
+    
+    // Land Use Types
+    private bool Arable = false;
+    private bool Orchards = false;
+    private bool Vineyards = false;
+    private bool Pastures = false;
+    private bool Hayfields = false;
+    private bool Greenhouses = false;
+
+    // Livestock
+    private int? Cattle;
+    private int? Pigs;
+    private int? Sheep;
+    private int? Goats;
+    private int? Horses;
+    private int? Poultry;
+
+    // Human Resources
+    private int? TotalEmployees;
+    private int? FamilyMembers;
+    private int? SeasonalWorkers;
+
+    // Financial Information
+    private decimal? AnnualIncome;
+    private decimal? AnnualExpenses;
+    private string SubsidiesReceived = "";
+
+    // Notes
+    private string Notes = "";
+
+    // Consent
+    private bool ConsentDataSharing = false;
+    private bool AcceptPrivacyPolicy = false;
+
+    // UI State
+    private bool IsEditMode = false;
+    private int CompletionPercentage = 65;
+
+    private void ToggleEditMode()
+    {
+        IsEditMode = !IsEditMode;
+    }
+
+    private void SaveProfile()
+    {
+        // Implement save logic
+        Navigation.NavigateTo("/");
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/");
+    }
+}
