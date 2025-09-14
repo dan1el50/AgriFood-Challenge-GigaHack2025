@@ -1,0 +1,204 @@
+@page "/admin"
+@page "/admin-dashboard"
+
+<PageTitle>Admin Dashboard</PageTitle>
+
+<div class="admin-container-table-only">
+    <!-- Main Content -->
+    <div class="admin-main-full">
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <div class="tab-buttons">
+                <button class="tab-button @FarmersTabClass" @onclick="SelectFarmersTab">Farmers</button>
+                <button class="tab-button @CompanyTabClass" @onclick="SelectCompanyTab">Company</button>
+                <button class="tab-button @CropsTabClass" @onclick="SelectCropsTab">Crops</button>
+                <button class="tab-button @FieldTypeTabClass" @onclick="SelectFieldTypeTab">Field_Type</button>
+                <button class="tab-button @AreasTabClass" @onclick="SelectAreasTab">Areas</button>
+            </div>
+            <button class="btn-export" @onclick="ExportCurrentData">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                </svg>
+                Export
+            </button>
+        </div>
+
+        <!-- Data Table -->
+        <div class="data-table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Company</th>
+                        <th>Company_IDNO</th>
+                        <th>Reg_Date</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var farmer in GetCurrentPageData())
+                    {
+                        <tr>
+                            <td>@farmer.Id</td>
+                            <td>@farmer.Name</td>
+                            <td>@farmer.Company</td>
+                            <td>@farmer.CompanyIdno</td>
+                            <td>@farmer.RegDate</td>
+                            <td>@farmer.Phone</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+            <button class="pagination-btn" @onclick="FirstPage" disabled="@IsFirstPage">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.41,16.59L13.82,12L18.41,7.41L17,6L11,12L17,18L18.41,16.59M6,6H8V18H6V6Z" />
+                </svg>
+            </button>
+            <button class="pagination-btn" @onclick="PreviousPage" disabled="@IsFirstPage">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.41,16.59L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.59Z" />
+                </svg>
+            </button>
+            
+            <button class="pagination-number @Page1Class" @onclick="GoToPage1">1</button>
+            <button class="pagination-number @Page2Class" @onclick="GoToPage2">2</button>
+            <button class="pagination-number @Page3Class" @onclick="GoToPage3">3</button>
+            
+            <span class="pagination-ellipsis">...</span>
+            <button class="pagination-number" @onclick="GoToPage10">10</button>
+            
+            <button class="pagination-btn" @onclick="NextPage" disabled="@IsLastPage">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8.59,16.59L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.59Z" />
+                </svg>
+            </button>
+            <button class="pagination-btn" @onclick="LastPage" disabled="@IsLastPage">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M5.59,7.41L10.18,12L5.59,16.59L7,18L13,12L7,6L5.59,7.41M16,6H18V18H16V6Z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+@inject NavigationManager Navigation
+
+@code {
+    // UI State
+    private string ActiveTab = "farmers";
+    private int CurrentPage = 1;
+    private int PageSize = 18;
+    private int TotalPages = 10;
+
+    // Computed properties for tab classes
+    private string FarmersTabClass => ActiveTab == "farmers" ? "active" : "";
+    private string CompanyTabClass => ActiveTab == "company" ? "active" : "";
+    private string CropsTabClass => ActiveTab == "crops" ? "active" : "";
+    private string FieldTypeTabClass => ActiveTab == "field_type" ? "active" : "";
+    private string AreasTabClass => ActiveTab == "areas" ? "active" : "";
+
+    // Computed properties for pagination
+    private bool IsFirstPage => CurrentPage == 1;
+    private bool IsLastPage => CurrentPage == TotalPages;
+    private string Page1Class => CurrentPage == 1 ? "active" : "";
+    private string Page2Class => CurrentPage == 2 ? "active" : "";
+    private string Page3Class => CurrentPage == 3 ? "active" : "";
+
+    // Hardcoded farmer data
+    private List<FarmerData> FarmersData = new()
+    {
+        new() { Id = 1, Name = "Ana Rusu", Company = "AgroVerde SRL", CompanyIdno = "1015600002001", RegDate = "2020-03-14", Phone = "+37369123001" },
+        new() { Id = 2, Name = "Ion Popescu", Company = "TerraGrain SRL", CompanyIdno = "1015600002002", RegDate = "2019-11-02", Phone = "+37369123002" },
+        new() { Id = 3, Name = "Maria Ganea", Company = "VitisNord SRL", CompanyIdno = "1015600002003", RegDate = "2021-06-28", Phone = "+37369123003" },
+        new() { Id = 4, Name = "Victor Ciobanu", Company = "EcoLactis SRL", CompanyIdno = "1015600002004", RegDate = "2018-09-10", Phone = "+37369123004" },
+        new() { Id = 5, Name = "Elena Ceban", Company = "Fructis MD SRL", CompanyIdno = "1015600002005", RegDate = "2022-04-05", Phone = "+37369123005" },
+        new() { Id = 6, Name = "Andrei Lupu", Company = "CampoNova SRL", CompanyIdno = "1015600002006", RegDate = "2017-12-19", Phone = "+37369123006" },
+        new() { Id = 7, Name = "Natalia Ursu", Company = "AgriLogix SRL", CompanyIdno = "1015600002007", RegDate = "2023-02-27", Phone = "+37369123007" },
+        new() { Id = 8, Name = "Dan Cazacu", Company = "DunareAgro SRL", CompanyIdno = "1015600002020", RegDate = "2025-08-11", Phone = "+37369123020" },
+        new() { Id = 9, Name = "Diana Moraru", Company = "Hortimax SRL", CompanyIdno = "1015600002009", RegDate = "2024-05-17", Phone = "+37369123009" },
+        new() { Id = 10, Name = "Vlad Istrate", Company = "AgriDelta SRL", CompanyIdno = "1015600002010", RegDate = "2019-01-30", Phone = "+37369123010" },
+        new() { Id = 11, Name = "Irina Cojocaru", Company = "BioFields SRL", CompanyIdno = "1015600002011", RegDate = "2022-10-12", Phone = "+37369123011" },
+        new() { Id = 12, Name = "Petru Vicol", Company = "ProCereal Grup SRL", CompanyIdno = "1015600002012", RegDate = "2018-03-08", Phone = "+37369123012" },
+        new() { Id = 13, Name = "Alina Rotaru", Company = "CodruHort SRL", CompanyIdno = "1015600002013", RegDate = "2021-11-25", Phone = "+37369123013" },
+        new() { Id = 14, Name = "Mihai Croitoru", Company = "Vinaria Lumina SRL", CompanyIdno = "1015600002014", RegDate = "2023-07-04", Phone = "+37369123014" },
+        new() { Id = 15, Name = "Tatiana Balan", Company = "AgroTrans SRL", CompanyIdno = "1015600002015", RegDate = "2025-01-16", Phone = "+37369123015" },
+        new() { Id = 16, Name = "Pavel Turcanu", Company = "Bostanisor SRL", CompanyIdno = "1015600002016", RegDate = "2020-06-09", Phone = "+37369123016" },
+        new() { Id = 17, Name = "Cristina Bejan", Company = "FreshRoots SRL", CompanyIdno = "1015600002017", RegDate = "2019-04-22", Phone = "+37369123017" },
+        new() { Id = 18, Name = "Nicolae Tirdea", Company = "AgriCredit SRL", CompanyIdno = "1015600002018", RegDate = "2024-09-03", Phone = "+37369123018" }
+    };
+
+    // Farmer data model
+    public class FarmerData
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = "";
+        public string Company { get; set; } = "";
+        public string CompanyIdno { get; set; } = "";
+        public string RegDate { get; set; } = "";
+        public string Phone { get; set; } = "";
+    }
+
+    // Tab selection methods
+    private void SelectFarmersTab()
+    {
+        ActiveTab = "farmers";
+        CurrentPage = 1;
+    }
+
+    private void SelectCompanyTab()
+    {
+        ActiveTab = "company";
+        CurrentPage = 1;
+    }
+
+    private void SelectCropsTab()
+    {
+        ActiveTab = "crops";
+        CurrentPage = 1;
+    }
+
+    private void SelectFieldTypeTab()
+    {
+        ActiveTab = "field_type";
+        CurrentPage = 1;
+    }
+
+    private void SelectAreasTab()
+    {
+        ActiveTab = "areas";
+        CurrentPage = 1;
+    }
+
+    // Pagination methods
+    private void GoToPage1() => CurrentPage = 1;
+    private void GoToPage2() => CurrentPage = 2;
+    private void GoToPage3() => CurrentPage = 3;
+    private void GoToPage10() => CurrentPage = 10;
+
+    private void FirstPage() => CurrentPage = 1;
+    private void LastPage() => CurrentPage = TotalPages;
+    private void PreviousPage()
+    {
+        if (CurrentPage > 1) CurrentPage--;
+    }
+    private void NextPage()
+    {
+        if (CurrentPage < TotalPages) CurrentPage++;
+    }
+
+    private List<FarmerData> GetCurrentPageData()
+    {
+        int skip = (CurrentPage - 1) * PageSize;
+        return FarmersData.Skip(skip).Take(PageSize).ToList();
+    }
+
+    private void ExportCurrentData()
+    {
+        // Implement current tab data export logic
+    }
+}
