@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Validators\CreateFarmerProfileCommandValidator.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Validators\CreateFarmerProfileCommandValidator.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GigaHack2025.Core\GigaHack2025.Core.csproj" />
     <ProjectReference Include="..\GigaHack2025.Shared\GigaHack2025.Shared.csproj" />
   </ItemGroup>

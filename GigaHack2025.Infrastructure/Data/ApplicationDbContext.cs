@@ -11,6 +11,7 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<User> Users { get; set; }
+    public DbSet<FarmerProfile> FarmerProfiles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -56,6 +57,48 @@ public class ApplicationDbContext : DbContext
             entity.HasIndex(e => e.Role);
         });
 
-        // No seed data here - create admin through API
+        // FarmerProfile entity configuration
+        // In your OnModelCreating method, update the FarmerProfile configuration:
+        modelBuilder.Entity<FarmerProfile>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            // Required fields
+            entity.Property(e => e.UserId).IsRequired();
+            entity.Property(e => e.CreatedAt).IsRequired();
+            entity.Property(e => e.UpdatedAt).IsRequired();
+            entity.Property(e => e.IsActive).IsRequired();
+
+            // All other fields are now optional (nullable)
+            entity.Property(e => e.FullName).HasMaxLength(100);
+            entity.Property(e => e.CompanyName).HasMaxLength(100);
+            entity.Property(e => e.LegalForm).HasConversion<string>();
+            entity.Property(e => e.CompanyIdno).HasMaxLength(13);
+            entity.Property(e => e.Email).HasMaxLength(100);
+            entity.Property(e => e.Phone).HasMaxLength(20);
+            entity.Property(e => e.Address).HasMaxLength(200);
+
+            entity.Property(e => e.RepFirstName).HasMaxLength(50);
+            entity.Property(e => e.RepLastName).HasMaxLength(50);
+            entity.Property(e => e.RepGender).HasConversion<string>();
+            entity.Property(e => e.RepIdNumber).HasMaxLength(20);
+
+            entity.Property(e => e.TotalFarmland).HasPrecision(10, 2);
+            entity.Property(e => e.AnnualIncome).HasPrecision(15, 2);
+            entity.Property(e => e.AnnualExpenses).HasPrecision(15, 2);
+
+            entity.Property(e => e.SubsidiesReceived).HasMaxLength(500);
+            entity.Property(e => e.Notes).HasMaxLength(2000);
+
+            // Relationships
+            entity.HasOne(e => e.User)
+                  .WithMany()
+                  .HasForeignKey(e => e.UserId)
+                  .OnDelete(DeleteBehavior.Cascade);
+
+            // Indexes
+            entity.HasIndex(e => e.UserId).IsUnique();
+        });
+
     }
 }
