@@ -1,5 +1,7 @@
 @page "/admin"
 @page "/admin-dashboard"
+@using System.Text
+@using Microsoft.JSInterop
 
 <PageTitle>Admin Dashboard</PageTitle>
 
@@ -87,6 +89,7 @@
 </div>
 
 @inject NavigationManager Navigation
+@inject IJSRuntime JS
 
 @code {
     // UI State
@@ -143,6 +146,64 @@
         public string Phone { get; set; } = "";
     }
 
+    // CSV Export using your proven Base64 method
+    private async Task ExportCurrentData()
+    {
+        try
+        {
+            // Generate CSV content
+            var csv = GenerateCsvContent();
+            
+            // Convert to Base64
+            var csvBytes = Encoding.UTF8.GetBytes(csv);
+            var base64 = Convert.ToBase64String(csvBytes);
+            
+            // Create filename
+            var fileName = $"{ActiveTab}_export_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.csv";
+            
+            // Download using your proven JavaScript function
+            await JS.InvokeVoidAsync("downloadFile", fileName, base64);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Export failed: {ex.Message}");
+        }
+    }
+
+    private string GenerateCsvContent()
+    {
+        var csv = new StringBuilder();
+        
+        // Add header row
+        csv.AppendLine("ID,Name,Company,Company_IDNO,Registration_Date,Phone");
+        
+        // Add data rows
+        var dataToExport = GetDataForExport();
+        
+        foreach (var farmer in dataToExport)
+        {
+            // Build row with proper CSV formatting
+            csv.AppendLine($"{farmer.Id},{QuoteIfNeeded(farmer.Name)},{QuoteIfNeeded(farmer.Company)},{QuoteIfNeeded(farmer.CompanyIdno)},{QuoteIfNeeded(farmer.RegDate)},{QuoteIfNeeded(farmer.Phone)}");
+        }
+        
+        return csv.ToString();
+    }
+
+    private string QuoteIfNeeded(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return "";
+            
+        // Always quote to ensure proper cell separation
+        return "\"" + value.Replace("\"", "\"\"") + "\"";
+    }
+
+    private List<FarmerData> GetDataForExport()
+    {
+        // Export all data - you can modify this to filter by ActiveTab
+        return FarmersData;
+    }
+
     // Tab selection methods
     private void SelectFarmersTab()
     {
@@ -195,10 +256,5 @@
     {
         int skip = (CurrentPage - 1) * PageSize;
         return FarmersData.Skip(skip).Take(PageSize).ToList();
-    }
-
-    private void ExportCurrentData()
-    {
-        // Implement current tab data export logic
     }
 }
